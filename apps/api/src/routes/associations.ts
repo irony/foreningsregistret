@@ -1,18 +1,18 @@
-import { OpenAPIHono, createRoute } from "@hono/zod-openapi";
-import { z } from "zod";
+import { OpenAPIHono, createRoute } from '@hono/zod-openapi'
+import { z } from 'zod'
 import {
   AssociationSchema,
   SearchFiltersSchema,
   SearchResultSchema,
   ApiResponseSchema,
-} from "@foreningsregister/types";
+} from '@foreningsregister/types'
 
-const app = new OpenAPIHono();
+const app = new OpenAPIHono()
 
 // Sökföreningar
 const searchRoute = createRoute({
-  method: "get",
-  path: "/search",
+  method: 'get',
+  path: '/search',
   request: {
     query: SearchFiltersSchema.extend({
       page: z.coerce.number().min(1).default(1),
@@ -22,28 +22,28 @@ const searchRoute = createRoute({
   responses: {
     200: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ApiResponseSchema.extend({
             data: SearchResultSchema,
           }),
         },
       },
-      description: "Sökresultat för föreningar",
+      description: 'Sökresultat för föreningar',
     },
     400: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ApiResponseSchema,
         },
       },
-      description: "Bad request",
+      description: 'Bad request',
     },
   },
-});
+})
 
-app.openapi(searchRoute, async (c) => {
+app.openapi(searchRoute, async c => {
   try {
-    const filters = c.req.valid("query");
+    const filters = c.req.valid('query')
 
     // TODO: Implementera söklogik med adaptrar
     const mockResult = {
@@ -52,32 +52,32 @@ app.openapi(searchRoute, async (c) => {
       page: filters.page,
       pageSize: filters.pageSize,
       totalPages: 0,
-    };
+    }
 
     return c.json({
       success: true,
       data: mockResult,
       metadata: {
-        source: "aggregated",
+        source: 'aggregated',
         timestamp: new Date().toISOString(),
-        version: "1.0.0",
+        version: '1.0.0',
       },
-    });
+    })
   } catch (error) {
     return c.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
-      400,
-    );
+      400
+    )
   }
-});
+})
 
 // Hämta specifik förening
 const getByIdRoute = createRoute({
-  method: "get",
-  path: "/{id}",
+  method: 'get',
+  path: '/{id}',
   request: {
     params: z.object({
       id: z.string(),
@@ -86,52 +86,52 @@ const getByIdRoute = createRoute({
   responses: {
     200: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ApiResponseSchema.extend({
             data: AssociationSchema,
           }),
         },
       },
-      description: "Föreningsinformation",
+      description: 'Föreningsinformation',
     },
     404: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ApiResponseSchema,
         },
       },
-      description: "Förening hittades inte",
+      description: 'Förening hittades inte',
     },
   },
-});
+})
 
-app.openapi(getByIdRoute, async (c) => {
+app.openapi(getByIdRoute, async c => {
   try {
-    const { id } = c.req.valid("params");
+    const { id } = c.req.valid('params')
 
     // TODO: Implementera hämtning med adaptrar
     return c.json(
       {
         success: false,
-        error: "Association not found",
+        error: 'Association not found',
       },
-      404,
-    );
+      404
+    )
   } catch (error) {
     return c.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
-      500,
-    );
+      500
+    )
   }
-});
+})
 
 // Hämta alla föreningar (med paginering)
 const getAllRoute = createRoute({
-  method: "get",
-  path: "/",
+  method: 'get',
+  path: '/',
   request: {
     query: z.object({
       page: z.coerce.number().min(1).default(1),
@@ -142,20 +142,20 @@ const getAllRoute = createRoute({
   responses: {
     200: {
       content: {
-        "application/json": {
+        'application/json': {
           schema: ApiResponseSchema.extend({
             data: SearchResultSchema,
           }),
         },
       },
-      description: "Lista över föreningar",
+      description: 'Lista över föreningar',
     },
   },
-});
+})
 
-app.openapi(getAllRoute, async (c) => {
+app.openapi(getAllRoute, async c => {
   try {
-    const { page, pageSize, municipality } = c.req.valid("query");
+    const { page, pageSize, municipality } = c.req.valid('query')
 
     // TODO: Implementera hämtning med adaptrar
     const mockResult = {
@@ -164,26 +164,26 @@ app.openapi(getAllRoute, async (c) => {
       page,
       pageSize,
       totalPages: 0,
-    };
+    }
 
     return c.json({
       success: true,
       data: mockResult,
       metadata: {
-        source: "aggregated",
+        source: 'aggregated',
         timestamp: new Date().toISOString(),
-        version: "1.0.0",
+        version: '1.0.0',
       },
-    });
+    })
   } catch (error) {
     return c.json(
       {
         success: false,
-        error: error instanceof Error ? error.message : "Unknown error",
+        error: error instanceof Error ? error.message : 'Unknown error',
       },
-      500,
-    );
+      500
+    )
   }
-});
+})
 
-export default app;
+export default app

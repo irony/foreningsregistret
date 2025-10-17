@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 // Grundläggande föreningsinformation som är gemensam för alla register
 export const AssociationSchema = z.object({
@@ -6,7 +6,7 @@ export const AssociationSchema = z.object({
   name: z.string(),
   organizationNumber: z
     .string()
-    .regex(/^\d{6}-\d{4}$/, "Ogiltigt organisationsnummer"),
+    .regex(/^\d{6}-\d{4}$/, 'Ogiltigt organisationsnummer'),
   description: z.string().optional(),
   website: z.string().url().optional(),
   email: z.string().email().optional(),
@@ -18,10 +18,10 @@ export const AssociationSchema = z.object({
       street: z.string().optional(),
       postalCode: z
         .string()
-        .regex(/^\d{3} \d{2}$/, "Ogiltigt postnummer")
+        .regex(/^\d{3} \d{2}$/, 'Ogiltigt postnummer')
         .optional(),
       city: z.string().optional(),
-      country: z.string().default("Sverige"),
+      country: z.string().default('Sverige'),
     })
     .optional(),
 
@@ -44,12 +44,12 @@ export const AssociationSchema = z.object({
         role: z.string(),
         email: z.string().email().optional(),
         phone: z.string().optional(),
-      }),
+      })
     )
     .optional(),
-});
+})
 
-export type Association = z.infer<typeof AssociationSchema>;
+export type Association = z.infer<typeof AssociationSchema>
 
 // Sökkriterier
 export const SearchFiltersSchema = z.object({
@@ -58,9 +58,9 @@ export const SearchFiltersSchema = z.object({
   county: z.string().optional(),
   category: z.string().optional(),
   isActive: z.boolean().optional(),
-});
+})
 
-export type SearchFilters = z.infer<typeof SearchFiltersSchema>;
+export type SearchFilters = z.infer<typeof SearchFiltersSchema>
 
 // Sökresultat
 export const SearchResultSchema = z.object({
@@ -69,9 +69,9 @@ export const SearchResultSchema = z.object({
   page: z.number(),
   pageSize: z.number(),
   totalPages: z.number(),
-});
+})
 
-export type SearchResult = z.infer<typeof SearchResultSchema>;
+export type SearchResult = z.infer<typeof SearchResultSchema>
 
 // API-svar
 export const ApiResponseSchema = z.object({
@@ -85,8 +85,8 @@ export const ApiResponseSchema = z.object({
       version: z.string(),
     })
     .optional(),
-});
+})
 
 export type ApiResponse<T = unknown> = z.infer<typeof ApiResponseSchema> & {
-  data?: T;
-};
+  data?: T
+}

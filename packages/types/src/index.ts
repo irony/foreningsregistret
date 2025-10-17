@@ -1,2 +1,2 @@
-export * from "./association";
-export * from "./adapters";
+export * from './association'
+export * from './adapters'

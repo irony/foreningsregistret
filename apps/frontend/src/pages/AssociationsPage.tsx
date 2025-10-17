@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { Search, Filter, Building } from "lucide-react";
+import React, { useState } from 'react'
+import { Search, Filter, Building } from 'lucide-react'
 
 const AssociationsPage: React.FC = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedMunicipality, setSelectedMunicipality] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [searchQuery, setSearchQuery] = useState('')
+  const [selectedMunicipality, setSelectedMunicipality] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState('')
 
   // Mock data - kommer att ersättas med riktiga API-anrop
   const mockAssociations = [
     {
-      id: "1",
-      name: "Idrottsföreningen Example",
-      organizationNumber: "123456-7890",
-      municipality: "Stockholm",
-      category: "Idrott",
-      description: "En lokal idrottsförening",
+      id: '1',
+      name: 'Idrottsföreningen Example',
+      organizationNumber: '123456-7890',
+      municipality: 'Stockholm',
+      category: 'Idrott',
+      description: 'En lokal idrottsförening',
     },
-  ];
+  ]
 
   return (
     <div className="space-y-6">
@@ -44,7 +44,7 @@ const AssociationsPage: React.FC = () => {
               <input
                 type="text"
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={e => setSearchQuery(e.target.value)}
                 placeholder="Sök efter namn, organisationsnummer..."
                 className="input pl-10"
               />
@@ -57,7 +57,7 @@ const AssociationsPage: React.FC = () => {
             </label>
             <select
               value={selectedMunicipality}
-              onChange={(e) => setSelectedMunicipality(e.target.value)}
+              onChange={e => setSelectedMunicipality(e.target.value)}
               className="input"
             >
               <option value="">Alla kommuner</option>
@@ -73,7 +73,7 @@ const AssociationsPage: React.FC = () => {
             </label>
             <select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
+              onChange={e => setSelectedCategory(e.target.value)}
               className="input"
             >
               <option value="">Alla kategorier</option>
@@ -112,7 +112,7 @@ const AssociationsPage: React.FC = () => {
           </div>
         ) : (
           <div className="grid gap-4">
-            {mockAssociations.map((association) => (
+            {mockAssociations.map(association => (
               <div
                 key={association.id}
                 className="card hover:shadow-md transition-shadow"
@@ -139,7 +139,7 @@ const AssociationsPage: React.FC = () => {
         )}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AssociationsPage;
+export default AssociationsPage
