@@ -1,49 +1,49 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import { ArrowLeft, Mail, Phone, Globe, MapPin, Building } from "lucide-react";
-import { Link } from "react-router-dom";
+import React from 'react'
+import { useParams } from 'react-router-dom'
+import { ArrowLeft, Mail, Phone, Globe, MapPin, Building } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const AssociationDetailPage: React.FC = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>()
 
   // Mock data - kommer att ersättas med riktigt API-anrop
   const mockAssociation = {
     id: id,
-    name: "Idrottsföreningen Example",
-    organizationNumber: "123456-7890",
+    name: 'Idrottsföreningen Example',
+    organizationNumber: '123456-7890',
     description:
-      "En lokal idrottsförening som bedriver verksamhet för barn och ungdomar i området. Vi erbjuder träning i flera olika sporter och har ett starkt fokus på gemenskap och personlig utveckling.",
-    website: "https://example.se",
-    email: "info@example.se",
-    phone: "08-123 456 78",
+      'En lokal idrottsförening som bedriver verksamhet för barn och ungdomar i området. Vi erbjuder träning i flera olika sporter och har ett starkt fokus på gemenskap och personlig utveckling.',
+    website: 'https://example.se',
+    email: 'info@example.se',
+    phone: '08-123 456 78',
     address: {
-      street: "Idrottsgatan 1",
-      postalCode: "123 45",
-      city: "Stockholm",
-      country: "Sverige",
+      street: 'Idrottsgatan 1',
+      postalCode: '123 45',
+      city: 'Stockholm',
+      country: 'Sverige',
     },
-    category: "Idrott",
-    subCategory: "Fotboll",
-    municipality: "Stockholm",
-    county: "Stockholms län",
+    category: 'Idrott',
+    subCategory: 'Fotboll',
+    municipality: 'Stockholm',
+    county: 'Stockholms län',
     isActive: true,
-    registrationDate: "2010-01-15T00:00:00Z",
-    lastUpdated: "2024-01-10T00:00:00Z",
+    registrationDate: '2010-01-15T00:00:00Z',
+    lastUpdated: '2024-01-10T00:00:00Z',
     contacts: [
       {
-        name: "Anna Andersson",
-        role: "Ordförande",
-        email: "anna.andersson@example.se",
-        phone: "070-123 456 78",
+        name: 'Anna Andersson',
+        role: 'Ordförande',
+        email: 'anna.andersson@example.se',
+        phone: '070-123 456 78',
       },
       {
-        name: "Erik Eriksson",
-        role: "Kassör",
-        email: "erik.eriksson@example.se",
-        phone: "070-987 654 32",
+        name: 'Erik Eriksson',
+        role: 'Kassör',
+        email: 'erik.eriksson@example.se',
+        phone: '070-987 654 32',
       },
     ],
-  };
+  }
 
   if (!mockAssociation) {
     return (
@@ -59,7 +59,7 @@ const AssociationDetailPage: React.FC = () => {
           Tillbaka till sök
         </Link>
       </div>
-    );
+    )
   }
 
   return (
@@ -215,7 +215,7 @@ const AssociationDetailPage: React.FC = () => {
                   <div>
                     <div>{mockAssociation.address.street}</div>
                     <div>
-                      {mockAssociation.address.postalCode}{" "}
+                      {mockAssociation.address.postalCode}{' '}
                       {mockAssociation.address.city}
                     </div>
                     <div>{mockAssociation.address.country}</div>
@@ -231,15 +231,15 @@ const AssociationDetailPage: React.FC = () => {
                   <span className="text-gray-600">Registrerad:</span>
                   <span>
                     {new Date(
-                      mockAssociation.registrationDate!,
-                    ).toLocaleDateString("sv-SE")}
+                      mockAssociation.registrationDate!
+                    ).toLocaleDateString('sv-SE')}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-gray-600">Senast uppdaterad:</span>
                   <span>
                     {new Date(mockAssociation.lastUpdated!).toLocaleDateString(
-                      "sv-SE",
+                      'sv-SE'
                     )}
                   </span>
                 </div>
@@ -249,7 +249,7 @@ const AssociationDetailPage: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default AssociationDetailPage;
+export default AssociationDetailPage

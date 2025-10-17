@@ -1,6 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Search, Database, MapPin, Users } from "lucide-react";
+import React from 'react'
+import { Link } from 'react-router-dom'
+import { Search, Database, MapPin, Users } from 'lucide-react'
 
 const HomePage: React.FC = () => {
   return (
@@ -78,7 +78,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
     </div>
-  );
-};
+  )
+}
 
-export default HomePage;
+export default HomePage

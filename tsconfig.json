@@ -1,14 +1,22 @@
 {
+  "files": [],
+  "references": [
+    { "path": "./packages/types" },
+    { "path": "./packages/shared" },
+    { "path": "./packages/adapters" },
+    { "path": "./apps/api" },
+    { "path": "./apps/frontend" }
+  ],
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["ES2022"],
+    "lib": ["ES2022", "DOM"],
     "module": "ESNext",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "moduleDetection": "force",
-    "noEmit": true,
+
     "jsx": "react-jsx",
     "allowJs": true,
     "checkJs": false,

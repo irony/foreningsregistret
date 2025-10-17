@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { Association } from "./association";
+import { z } from 'zod'
+import { Association } from './association'
 
 // Adapter-konfiguration
 export const AdapterConfigSchema = z.object({
@@ -15,26 +15,26 @@ export const AdapterConfigSchema = z.object({
       burstLimit: z.number().default(10),
     })
     .optional(),
-});
+})
 
-export type AdapterConfig = z.infer<typeof AdapterConfigSchema>;
+export type AdapterConfig = z.infer<typeof AdapterConfigSchema>
 
 // Adapter-gränssnitt
 export interface IAssociationAdapter {
-  readonly config: AdapterConfig;
+  readonly config: AdapterConfig
 
   // Grundläggande operationer
-  searchAssociations(filters: any): Promise<any>;
-  getAssociationById(id: string): Promise<Association | null>;
+  searchAssociations(filters: any): Promise<any>
+  getAssociationById(id: string): Promise<Association | null>
 
   // Hämta alla (med paginering)
-  getAllAssociations(page?: number, pageSize?: number): Promise<any>;
+  getAllAssociations(page?: number, pageSize?: number): Promise<any>
 
   // Health check
-  healthCheck(): Promise<boolean>;
+  healthCheck(): Promise<boolean>
 
   // Transformera data till standardformat
-  transformData(rawData: any): Association[];
+  transformData(rawData: any): Association[]
 }
 
 // Adapter-resultat
@@ -48,6 +48,6 @@ export const AdapterResultSchema = z.object({
     processingTime: z.number(),
     timestamp: z.string().datetime(),
   }),
-});
+})
 
-export type AdapterResult = z.infer<typeof AdapterResultSchema>;
+export type AdapterResult = z.infer<typeof AdapterResultSchema>

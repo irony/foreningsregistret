@@ -1,15 +1,15 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Search, Home } from "lucide-react";
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
+import { Search, Home } from 'lucide-react'
 
 interface LayoutProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
-  const location = useLocation();
+  const location = useLocation()
 
-  const isActive = (path: string) => location.pathname === path;
+  const isActive = (path: string) => location.pathname === path
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -24,9 +24,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Link
                   to="/"
                   className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive("/")
-                      ? "bg-primary-100 text-primary-700"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    isActive('/')
+                      ? 'bg-primary-100 text-primary-700'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   <Home size={16} />
@@ -35,9 +35,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Link
                   to="/foreningar"
                   className={`flex items-center space-x-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive("/foreningar")
-                      ? "bg-primary-100 text-primary-700"
-                      : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    isActive('/foreningar')
+                      ? 'bg-primary-100 text-primary-700'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                   }`}
                 >
                   <Search size={16} />
@@ -61,7 +61,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         </div>
       </footer>
     </div>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout
