@@ -114,12 +114,12 @@ Exempel:
 export class NewMunicipalityAdapter extends BaseAdapter {
   constructor() {
     const config: AdapterConfig = {
-      name: "Nyköping",
-      baseUrl: "https://api.nykoping.se/foreningar",
-      municipality: "Nyköping",
-      county: "Södermanlands län",
-    };
-    super(config);
+      name: 'Nyköping',
+      baseUrl: 'https://api.nykoping.se/foreningar',
+      municipality: 'Nyköping',
+      county: 'Södermanlands län',
+    }
+    super(config)
   }
 
   // Implementera metoder...
@@ -160,32 +160,32 @@ All data valideras med Zod-scheman för att säkerställa konsistens:
 
 ```typescript
 interface Association {
-  id: string;
-  name: string;
-  organizationNumber: string;
-  description?: string;
-  website?: string;
-  email?: string;
-  phone?: string;
+  id: string
+  name: string
+  organizationNumber: string
+  description?: string
+  website?: string
+  email?: string
+  phone?: string
   address?: {
-    street?: string;
-    postalCode?: string;
-    city?: string;
-    country: string;
-  };
-  category?: string;
-  subCategory?: string;
-  municipality: string;
-  county: string;
-  isActive: boolean;
-  registrationDate?: string;
-  lastUpdated?: string;
+    street?: string
+    postalCode?: string
+    city?: string
+    country: string
+  }
+  category?: string
+  subCategory?: string
+  municipality: string
+  county: string
+  isActive: boolean
+  registrationDate?: string
+  lastUpdated?: string
   contacts?: Array<{
-    name: string;
-    role: string;
-    email?: string;
-    phone?: string;
-  }>;
+    name: string
+    role: string
+    email?: string
+    phone?: string
+  }>
 }
 ```
 
