@@ -1,0 +1,31 @@
+{
+  "name": "@foreningsregister/api",
+  "version": "1.0.0",
+  "description": "API för svenska föreningsregister",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "lint": "eslint src --ext .ts,.tsx",
+    "test": "vitest"
+  },
+  "dependencies": {
+    "@foreningsregister/types": "workspace:*",
+    "@foreningsregister/adapters": "workspace:*",
+    "@hono/zod-openapi": "^0.12.0",
+    "@hono/node-server": "^1.8.0",
+    "hono": "^4.0.0",
+    "zod": "^3.22.0",
+    "openapi-fetch": "^0.9.0",
+    "dotenv": "^16.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0",
+    "vitest": "^1.2.0"
+  }
+}

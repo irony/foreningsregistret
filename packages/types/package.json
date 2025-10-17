@@ -1,0 +1,19 @@
+{
+  "name": "@foreningsregister/types",
+  "version": "1.0.0",
+  "description": "Delade typer och Zod-scheman för föreningsregister",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "type-check": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "zod": "^3.22.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0"
+  }
+}
