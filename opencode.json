@@ -107,12 +107,7 @@
     }
   },
   "watcher": {
-    "ignore": [
-      "node_modules",
-      "dist",
-      ".git",
-      "coverage"
-    ]
+    "ignore": ["node_modules", "dist", ".git", "coverage"]
   },
   "provider": {
     "berget": {
