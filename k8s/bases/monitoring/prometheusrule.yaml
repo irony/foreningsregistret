@@ -1,0 +1,65 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: foreningsregister-rules
+  labels:
+    app: foreningsregister
+    component: monitoring
+spec:
+  groups:
+    - name: foreningsregister.rules
+      rules:
+        - alert: APIHighErrorRate
+          expr: rate(http_requests_total{job="foreningsregister-api",status=~"5.."}[5m]) > 0.1
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: 'High error rate detected in API'
+            description: 'API error rate is {{ $value }} errors per second'
+
+        - alert: APIHighLatency
+          expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket{job="foreningsregister-api"}[5m])) > 1
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: 'High latency detected in API'
+            description: '95th percentile latency is {{ $value }} seconds'
+
+        - alert: APIDown
+          expr: up{job="foreningsregister-api"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: 'API is down'
+            description: 'API has been down for more than 1 minute'
+
+        - alert: FrontendDown
+          expr: up{job="foreningsregister-frontend"} == 0
+          for: 1m
+          labels:
+            severity: critical
+          annotations:
+            summary: 'Frontend is down'
+            description: 'Frontend has been down for more than 1 minute'
+
+        - alert: HighMemoryUsage
+          expr: container_memory_usage_bytes{pod=~"foreningsregister-.*"} / container_spec_memory_limit_bytes > 0.9
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: 'High memory usage detected'
+            description: 'Memory usage is above 90% for {{ $labels.pod }}'
+
+        - alert: HighCPUUsage
+          expr: rate(container_cpu_usage_seconds_total{pod=~"foreningsregister-.*"}[5m]) > 0.8
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: 'High CPU usage detected'
+            description: 'CPU usage is above 80% for {{ $labels.pod }}'

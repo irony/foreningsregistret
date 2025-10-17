@@ -1,0 +1,33 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: foreningsregister
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  ref:
+    branch: develop
+  secretRef:
+    name: foreningsregister-git-secret
+  url: ssh://git@github.com/yourusername/foreningsregister.git
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: foreningsregister-staging
+  namespace: flux-system
+spec:
+  interval: 5m0s
+  path: ./k8s/overlays/staging
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: foreningsregister
+  targetNamespace: foreningsregister-staging
+  timeout: 2m0s
+  wait: true
+  postBuild:
+    substitute:
+      CLUSTER_ENV: 'staging'
+      CLUSTER_NAME: 'staging-cluster'

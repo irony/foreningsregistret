@@ -1,0 +1,97 @@
+name: CD
+
+on:
+  push:
+    branches: [main, develop]
+    paths: ['k8s/**']
+
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    environment: staging
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.0'
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_STAGING }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+
+      - name: Verify cluster connection
+        run: |
+          export KUBECONFIG=kubeconfig
+          kubectl cluster-info
+
+      - name: Deploy to staging
+        run: |
+          export KUBECONFIG=kubeconfig
+          cd k8s/overlays/staging
+          kubectl apply -k .
+
+      - name: Wait for rollout
+        run: |
+          export KUBECONFIG=kubeconfig
+          kubectl rollout status deployment/staging-foreningsregister-api -n foreningsregister-staging --timeout=300s
+          kubectl rollout status deployment/staging-foreningsregister-frontend -n foreningsregister-staging --timeout=300s
+
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment: production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.0'
+
+      - name: Configure kubectl
+        run: |
+          echo "${{ secrets.KUBE_CONFIG_PROD }}" | base64 -d > kubeconfig
+          export KUBECONFIG=kubeconfig
+
+      - name: Verify cluster connection
+        run: |
+          export KUBECONFIG=kubeconfig
+          kubectl cluster-info
+
+      - name: Deploy to production
+        run: |
+          export KUBECONFIG=kubeconfig
+          cd k8s/overlays/production
+          kubectl apply -k .
+
+      - name: Wait for rollout
+        run: |
+          export KUBECONFIG=kubeconfig
+          kubectl rollout status deployment/prod-foreningsregister-api -n foreningsregister-prod --timeout=600s
+          kubectl rollout status deployment/prod-foreningsregister-frontend -n foreningsregister-prod --timeout=600s
+
+      - name: Run smoke tests
+        run: |
+          export KUBECONFIG=kubeconfig
+          # Wait for ingress to be ready
+          kubectl wait --for=condition=ready ingress/prod-foreningsregister-ingress -n foreningsregister-prod --timeout=300s
+
+          # Get ingress URL
+          INGRESS_URL=$(kubectl get ingress prod-foreningsregister-ingress -n foreningsregister-prod -o jsonpath='{.spec.rules[0].host}')
+
+          # Run basic health checks
+          curl -f "https://${INGRESS_URL}/health" || exit 1
+          curl -f "https://${INGRESS_URL}/api/health" || exit 1
